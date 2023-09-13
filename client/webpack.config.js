@@ -20,7 +20,7 @@ module.exports = () => {
         title: 'TODOs List'
       }),
       new InjectManifest({
-        swSrc: './src/sw.js',
+        swSrc: './src-sw.js',
         swDest: 'service-worker.js',
       }),
       new WebpackPwaManifest({
@@ -33,18 +33,14 @@ module.exports = () => {
         description: "runs a text editor in the browser",
         background_color: "#7eb4e2",
         theme_color: "#7eb4e2",
+        //having an issue with the manifest naming of the icon, html cannot locate the file
         icons: [
           {
-            src: path.resolve('assets/images/logo.png'),
+            src: path.resolve('./src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512],
             destination: path.join('assets', 'icons'),
           },
         ],
-        orientation: "portrait",
-        display: "standalone",
-        start_url: "./",
-        publicpath: './todos',
-        description: "displays an icon!",
       })
     ],
 
