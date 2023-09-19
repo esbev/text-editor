@@ -33,6 +33,7 @@ module.exports = () => {
         description: "runs a text editor in the browser",
         background_color: "#7eb4e2",
         theme_color: "#7eb4e2",
+        fingerprints: false,
         //having an issue with the manifest naming of the icon, html cannot locate the file
         icons: [
           {

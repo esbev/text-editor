@@ -1,4 +1,4 @@
-const { offlineFallback, warmStrategyCache } = require('workbox-recipes');
+const { warmStrategyCache } = require('workbox-recipes');
 const { StaleWhileRevalidate, CacheFirst } = require('workbox-strategies');
 const { registerRoute } = require('workbox-routing');
 const { CacheableResponsePlugin } = require('workbox-cacheable-response');
@@ -28,10 +28,10 @@ registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 registerRoute(
   ({ request }) => 
-    request.destination === 'style' ||
-    request.destination === 'script' ||
-    request.destination === 'worker' ,
-  // ['style', 'script', 'worker'].includes(request.destination),
+    // request.destination === 'style' ||
+    // request.destination === 'script' ||
+    // request.destination === 'worker' ,
+  ['style', 'script', 'worker'].includes(request.destination),
   matchCallback,
   new StaleWhileRevalidate({
     cacheName: 'my-asset-cache',
@@ -45,3 +45,19 @@ registerRoute(
     ],
   })
 );
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open('error-cache').then((response) => {
+      return response || fetch(event.request);
+    })
+  )
+});
+
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  )
+});
