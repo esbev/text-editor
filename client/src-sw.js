@@ -32,7 +32,6 @@ registerRoute(
     // request.destination === 'script' ||
     // request.destination === 'worker' ,
   ['style', 'script', 'worker'].includes(request.destination),
-  matchCallback,
   new StaleWhileRevalidate({
     cacheName: 'my-asset-cache',
     plugins: [
@@ -46,18 +45,18 @@ registerRoute(
   })
 );
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open('error-cache').then((response) => {
-      return response || fetch(event.request);
-    })
-  )
-});
+// self.addEventListener('install', (event) => {
+//   event.waitUntil(
+//     caches.open('error-cache').then((response) => {
+//       return response || fetch(event.request);
+//     })
+//   )
+// });
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  )
-});
+// self.addEventListener('fetch', (event) => {
+//   event.respondWith(
+//     caches.match(event.request).then((response) => {
+//       return response || fetch(event.request);
+//     })
+//   )
+// });

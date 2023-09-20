@@ -21,20 +21,19 @@ module.exports = () => {
       }),
       new InjectManifest({
         swSrc: './src-sw.js',
-        swDest: 'service-worker.js',
+        swDest: 'src-sw.js',
       }),
       new WebpackPwaManifest({
         name: 'Text Editor',
         short_name: 'TxtEdt',
         orientation: "portrait",
         display: "standalone",
-        start_url: "./",
-        publicpath: './editor',
+        start_url: "/",
+        publicPath: '/',
         description: "runs a text editor in the browser",
         background_color: "#7eb4e2",
         theme_color: "#7eb4e2",
         fingerprints: false,
-        //having an issue with the manifest naming of the icon, html cannot locate the file
         icons: [
           {
             src: path.resolve('./src/images/logo.png'),
